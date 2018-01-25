@@ -6,11 +6,11 @@
 ```bash
 luarocks install cudnn
 ```
-  - Install the **batchDisc** branch of the git repo [stnbhwd](https://github.com/qassemoquab/stnbhwd/tree/batchDisc), since we will need the batch discrimination layer. 
+  - Install the **batchDisc** branch of the git repo [stnbhwd](https://github.com/qassemoquab/stnbhwd/tree/batchDisc), as we need the batch discrimination layer. 
 
 ## Dataset
-  - We provide code with Birds dataset. You may download the processed t7 file from https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8.
-  - We also provide ablation studies with MNIST. You may download the MNIST files (both binary and dynamic) from https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8.
+  - We provide code to train Birds dataset. The processed t7 files can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8).
+  - We also provide code to conduct ablation studies on MNIST. The MNIST files (both binary and dynamic) can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8).
 
 ## Training 
   - To train Birds with baseline VAE-GAN, 
@@ -38,7 +38,7 @@ th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset m
 
 
 ## Citation
-If you use this code for your research, please cite our paper:
+If you find our code useful, please cite our paper:
 ```
 @inproceedings{shang2017channel,
   title={Channel-Recurrent Autoencodering for Image Modeling},
@@ -92,10 +92,11 @@ If you use the static MNIST datset, please also cite
 ```
 
 ## Acknowledgments
-Torch is a **fantastic framework** for deep learning research, which allows fast prototyping and easy manipulation of gradients propogation. We would like to thank the amazing Torch developers and the community. Our implementation has especially been benefited from the following excellent repositories:
+Torch is a **fantastic framework** for deep learning research, which allows fast prototyping and easy manipulation of gradient propogations. We would like to thank the amazing Torch developers and the community. Our implementation has especially been benefited from the following excellent repositories:
  - Variational Autoencoders: https://github.com/y0ast/VAE-Torch
  - Spatial Transformer Network: https://github.com/qassemoquab/stnbhwd
  - facebook.resnet.torch: https://github.com/facebook/fb.resnet.torch
  - DCGAN: https://github.com/soumith/dcgan.torch
  - Generating Faces with Torch: https://github.com/skaae/torch-gan
+ - Attr2Img: https://github.com/xcyan/eccv16_attr2img
  - CIFAR10: https://github.com/szagoruyko/cifar.torch  
