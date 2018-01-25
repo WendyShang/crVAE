@@ -13,23 +13,23 @@ luarocks install cudnn
   - We also provide ablation studies with MNIST. You may download the MNIST files (both binary and dynamic) from https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8.
 
 ## Training 
-  -To train Birds with baseline VAE-GAN, 
+  - To train Birds with baseline VAE-GAN, 
 ```bash
 th main.lua -data /path/to/Birds/ -save /path/to/checkpoints/ -alpha 0.0002 -beta 0.05 -LR 0.0003 -eps 1e-6 -mom 0.9 -step 60 -manualSeed 1196
 ``` 
-  -To train Birds with channel-recurrent VAE-GAN,
+  - To train Birds with channel-recurrent VAE-GAN,
 ```bash
 th main.lua -data /path/to/Birds/ -save /path/to/checkpoints/ -alpha1 0.0003 -alpha2 0.0002 -beta 0.0125 -LR 0.0003 -kappa 0.02 -latentType lstm -eps 1e-6 -mom 0.9 -step 60 -manualSeed 96
 ```
-  -To train MNIST with VAE, 
+  - To train MNIST with VAE, 
 ```bash
 th main_mnist.lua -LR 0.0003 -alpha 0.001 -latentType baseline -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binary/mnist/
 ```
-  -To train MNIST with convolutional VAE, 
+  - To train MNIST with convolutional VAE, 
 ```bash
 th main_mnist.lua -LR 0.0003 -alpha 0.001 -latentType conv -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binary/mnist/
 ```
-  -To train MNIST with channel-recurrent VAE,
+  - To train MNIST with channel-recurrent VAE,
 ```bash
 th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binayr/mnist/
 ```
@@ -92,3 +92,10 @@ If you use the static MNIST datset, please also cite
 ```
 
 ## Acknowledgments
+Torch is a **fantastic framework** for deep learning research, which allows fast prototyping and easy manipulation of gradients propogation. We would like to thank the amazing Torch developers and the community. Our implementation has especially been benefited from the following excellent repositories:
+ - Variational Autoencoders: https://github.com/y0ast/VAE-Torch
+ - Spatial Transformer Network: https://github.com/qassemoquab/stnbhwd
+ - facebook.resnet.torch: https://github.com/facebook/fb.resnet.torch
+ - DCGAN: https://github.com/soumith/dcgan.torch
+ - Generating Faces with Torch: https://github.com/skaae/torch-gan
+ - CIFAR10: https://github.com/szagoruyko/cifar.torch  
