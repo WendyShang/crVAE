@@ -35,7 +35,9 @@ th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset m
 ```
 
 ## Pretrained Models
-We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8) for others to perform quantitative evaluations such as in terms of inception scores, human preferences and etc. We also provide a script `generate_images.lua` to generate individual images from the pretrained models. This script has a lot of hardcoded components targeting at our models; for the same reason, please maintain the model names since they are parsed inside the script to extract model information. 
+We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8) for others to perform quantitative evaluations such as in terms of inception scores, human preferences and etc. We also provide a script `generate_images.lua` to generate individual images from the pretrained models. This script has a lot of hardcoded components targeting at our models; for the same reason, please maintain the model names since they are parsed inside the script to extract model information. Here we present selected samples from the pretrained models. 
+
+<img src="utils/upsample_repo.jpg" width="1000px"/>
 
  - The Stage1 models are named in the format of `DATASET_Stage1_MODELTYPE.t7`; for example, `birds_Stage1_crvae.t7` refers to the crVAE-GAN model trained on 64x64 Birds images. To generate (`nSamples` is the number of generations), 
 ```
