@@ -9,8 +9,8 @@ luarocks install cudnn
   - Install the **batchDisc** branch of the git repo [stnbhwd](https://github.com/qassemoquab/stnbhwd/tree/batchDisc), as we need the batch discrimination layer. 
 
 ## Dataset
-  - We provide code to train Birds dataset. The processed t7 files can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8).
-  - We also provide code to conduct ablation studies on MNIST. The MNIST files (both binary and dynamic) can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8).
+  - We provide code to train Birds dataset. The processed t7 files can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/BOhGIKNjV14igmQ).
+  - We also provide code to conduct ablation studies on MNIST. The MNIST files (both binary and dynamic) can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/BOhGIKNjV14igmQ).
 
 ## Training 
   - To train Birds with baseline VAE-GAN, 
@@ -35,7 +35,7 @@ th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset m
 ```
 
 ## Pretrained Models
-We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8) for others to perform quantitative evaluations such as in terms of inception scores, human preferences and etc. We also provide a script `generate_images.lua` to generate individual images from the pretrained models. This script has a lot of hardcoded components targeting at our models; for the same reason, please maintain the model names since they are parsed inside the script to extract model information. Here we present selected samples from the pretrained models. 
+We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/BOhGIKNjV14igmQ) for others to perform quantitative evaluations such as in terms of inception scores, human preferences and etc. We also provide a script `generate_images.lua` to generate individual images from the pretrained models. This script has a lot of hardcoded components targeting at our models; for the same reason, please maintain the model names since they are parsed inside the script to extract model information. Here we present selected samples from the pretrained models. 
 
 <img src="utils/upsample_repo.jpg" width="1000px"/>
 
@@ -43,7 +43,7 @@ We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be down
 ```
 nSamples=500 modelFile=birds_Stage1_crvae.t7 modelDir=/path/to/pretrained/ saveDir=/path/to/save/ th generate_images.lua
 ```
- - To generate Stage2 images, the Stage1 models are needed. In addition, Birds and CelebA require 2 GPUs and LSUN bedrooms 3 GPUs. The Stage2 models trained with perceptual loss are named in the format of `DATASET_Stage2_MODELTYPE_perc.t7`, without `DATASET_Stage2_MODELTYPE.t7`. For example, `birds_Stage2_crvae_perc.t7` refers to the Stage2 model trained on top of crVAE-GAN Stage1 model for Birds with perceptual loss. To generate, 
+ - To generate Stage2 images-128x128 for Birds and CelebA, 224x224 for LSUN bedrooms-the Stage1 models are necessary to have. In addition, Birds and CelebA require 2 GPUs and LSUN bedrooms 3 GPUs. The Stage2 models trained with perceptual loss are named in the format of `DATASET_Stage2_MODELTYPE_perc.t7`, without `DATASET_Stage2_MODELTYPE.t7`. For example, `birds_Stage2_crvae_perc.t7` refers to the Stage2 model trained on top of crVAE-GAN Stage1 model for Birds with perceptual loss. To generate, 
 ```
 nSamples=500 modelFile=birds_Stage2_crvae_perc.t7 modelDir=/path/to/pretrained/ saveDir=/path/to/save/ th generate_images.lua
 ```
