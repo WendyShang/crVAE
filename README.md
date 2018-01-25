@@ -1,13 +1,20 @@
-# torch_freluc
-## Train VGGNet on ImageNet
-  - [VGG11 with logSoftMax](https://www.dropbox.com/s/lgokejb1mh1as02/model_120.t7?dl=0)
-  - VGG11 without logSoftMax (running)
+# Channel-Recurrent VAE for Image Modeling [pdf](https://arxiv.org/pdf/1706.03729.pdf)
+## Prerequisites
+  - Linux, NVIDIA GPU + CUDA CuDNN 
+  - Install torch dependencies from https://github.com/torch/distro
+  - Install torch pacakge `cudnn`
+```bash
+luarocks install cudnn
+```
+  - Install the **batchDisc** branch of the git repo [stnbhwd](https://github.com/qassemoquab/stnbhwd/tree/batchDisc), since we will need the batch discrimination layer. 
 
-## Train ResNet-50 on NABirds
-  - ResNet-50, 512-pair, 256 dim (running)
-  - ResNet-50, 512-pair, 512 dim (running)
+## Dataset
+  - We provide code with Birds dataset. You may download the processed t7 file from https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8.
+  - We also provide ablation studies with MNIST. You may download the MNIST files (both binary and dynamic) from https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8.
 
-## Hyperparameter search on Birds
-  - [pretrained model](https://www.dropbox.com/s/fnri1u4a2s0v1tw/model_120_birds.t7?dl=0)
-
-git repo for luatorch based projects
+## Training 
+  -To train Birds with the baseline VAE-GAN, 
+```bash
+th main.lua -data /path/to/Birds/ -save /path/to/checkpoints/ -alpha 0.0002 -beta 0.05 -LR 0.0003 -eps 1e-6 -mom 0.9 -step 60 -manualSeed 1196
+``` 
+## Pretrained Models (Coming Soon!)
