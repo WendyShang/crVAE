@@ -1,4 +1,4 @@
-# Channel-Recurrent VAE for Image Modeling [[pdf](https://arxiv.org/pdf/1706.03729.pdf)]
+# Channel-Recurrent VAE for Image Modeling [[pdf](http://www-personal.umich.edu/~shangw/wacv18_main.pdf)][[supplementary materials](http://www-personal.umich.edu/~shangw/wacv18_supplementary_material.pdf)]
 ## Prerequisites
   - Linux, NVIDIA GPU + CUDA CuDNN 
   - Install torch dependencies from https://github.com/torch/distro
@@ -34,8 +34,17 @@ th main_mnist.lua -LR 0.0003 -alpha 0.001 -latentType conv -dataset mnist_28x28 
 th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binayr/mnist/
 ```
 
-## Pretrained Models (Coming Soon!)
+## Pretrained Models
+We provide pretrained models for Birds, CelebA, LSUN bedrooms, which can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8) for others to perform quantitative evaluations such as in terms of inception scores, human preferences and etc. We also provide a script `generate_images.lua` to generate individual images from the pretrained models. This script has a lot of hardcoded components targeting at our models; for the same reason, please maintain the model names since they are parsed inside the script to extract model information. 
 
+ - The Stage1 models are named in the format of `DATASET_Stage1_MODELTYPE.t7`; for example, `birds_Stage1_crvae.t7` refers to the crVAE-GAN model trained on 64x64 Birds images. To generate (`nSamples` is the number of generations), 
+```
+nSamples=500 modelFile=birds_Stage1_crvae.t7 modelDir=/path/to/pretrained/ saveDir=/path/to/save/ th generate_images.lua
+```
+ - To generate Stage2 images, the Stage1 models are needed. In addition, Birds and CelebA require 2 GPUs and LSUN bedrooms 3 GPUs. The Stage2 models trained with perceptual loss are named in the format of `DATASET_Stage2_MODELTYPE_perc.t7`, without `DATASET_Stage2_MODELTYPE.t7`. For example, `birds_Stage2_crvae_perc.t7` refers to the Stage2 model trained on top of crVAE-GAN Stage1 model for Birds with perceptual loss. To generate, 
+```
+nSamples=500 modelFile=birds_Stage2_crvae_perc.t7 modelDir=/path/to/pretrained/ saveDir=/path/to/save/ th generate_images.lua
+```
 
 ## Citation
 If you find our code useful, please cite our paper:
@@ -95,6 +104,7 @@ If you use the static MNIST datset, please also cite
 Torch is a **fantastic framework** for deep learning research, which allows fast prototyping and easy manipulation of gradient propogations. We would like to thank the amazing Torch developers and the community. Our implementation has especially been benefited from the following excellent repositories:
  - Variational Autoencoders: https://github.com/y0ast/VAE-Torch
  - Spatial Transformer Network: https://github.com/qassemoquab/stnbhwd
+ - StackGAN: https://github.com/hanzhanggit/StackGAN
  - facebook.resnet.torch: https://github.com/facebook/fb.resnet.torch
  - DCGAN: https://github.com/soumith/dcgan.torch
  - Generating Faces with Torch: https://github.com/skaae/torch-gan
