@@ -1,13 +1,102 @@
-# torch_freluc
-## Train VGGNet on ImageNet
-  - [VGG11 with logSoftMax](https://www.dropbox.com/s/lgokejb1mh1as02/model_120.t7?dl=0)
-  - VGG11 without logSoftMax (running)
+# Channel-Recurrent VAE for Image Modeling [[pdf](https://arxiv.org/pdf/1706.03729.pdf)]
+## Prerequisites
+  - Linux, NVIDIA GPU + CUDA CuDNN 
+  - Install torch dependencies from https://github.com/torch/distro
+  - Install torch pacakge `cudnn`
+```bash
+luarocks install cudnn
+```
+  - Install the **batchDisc** branch of the git repo [stnbhwd](https://github.com/qassemoquab/stnbhwd/tree/batchDisc), as we need the batch discrimination layer. 
 
-## Train ResNet-50 on NABirds
-  - ResNet-50, 512-pair, 256 dim (running)
-  - ResNet-50, 512-pair, 512 dim (running)
+## Dataset
+  - We provide code to train Birds dataset. The processed t7 files can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf3W6e8).
+  - We also provide code to conduct ablation studies on MNIST. The MNIST files (both binary and dynamic) can be downloaded from [here](https://surfdrive.surf.nl/files/index.php/s/MeQvGwtRGf1W6e8).
 
-## Hyperparameter search on Birds
-  - [pretrained model](https://www.dropbox.com/s/fnri1u4a2s0v1tw/model_120_birds.t7?dl=0)
+## Training 
+  - To train Birds with baseline VAE-GAN, 
+```bash
+th main.lua -data /path/to/Birds/ -save /path/to/checkpoints/ -alpha 0.0002 -beta 0.05 -LR 0.0003 -eps 1e-6 -mom 0.9 -step 60 -manualSeed 1196
+``` 
+  - To train Birds with channel-recurrent VAE-GAN,
+```bash
+th main.lua -data /path/to/Birds/ -save /path/to/checkpoints/ -alpha1 0.0003 -alpha2 0.0002 -beta 0.0125 -LR 0.0003 -kappa 0.02 -latentType lstm -eps 1e-6 -mom 0.9 -step 60 -manualSeed 96
+```
+  - To train MNIST with VAE, 
+```bash
+th main_mnist.lua -LR 0.0003 -alpha 0.001 -latentType baseline -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binary/mnist/
+```
+  - To train MNIST with convolutional VAE, 
+```bash
+th main_mnist.lua -LR 0.0003 -alpha 0.001 -latentType conv -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binary/mnist/
+```
+  - To train MNIST with channel-recurrent VAE,
+```bash
+th main_mnist.lua -LR 0.003 -timeStep 8 -alpha 0.001 -latentType lstm -dataset mnist_28x28 -baseChannels 32 -nEpochs 200 -eps 1e-5 -mom 0.1 -step 50 -save /path/to/save/ -dynamicMNIST /path/to/dynamics/mnist/ -binaryMNIST /path/to/binayr/mnist/
+```
 
-git repo for luatorch based projects
+## Pretrained Models (Coming Soon!)
+
+
+## Citation
+If you find our code useful, please cite our paper:
+```
+@inproceedings{shang2017channel,
+  title={Channel-Recurrent Autoencodering for Image Modeling},
+  author={Shang, Wenling and Sohn, Kihyuk and Tian, Yuandong},
+  booktitle={WACV},
+  year={2018}
+}
+```
+If you use the Birds data, please also cite the following papers
+```
+@article{wah2011caltech,
+  title={The caltech-ucsd birds-200-2011 dataset},
+  author={Wah, Catherine and Branson, Steve and Welinder, Peter and Perona, Pietro and Belongie, Serge},
+  year={2011},
+  publisher={California Institute of Technology}
+}
+@inproceedings{van2015building,
+  title={Building a bird recognition app and large scale dataset with citizen scientists: The fine print in fine-grained dataset collection},
+  author={Van Horn, Grant and Branson, Steve and Farrell, Ryan and Haber, Scott and Barry, Jessie and Ipeirotis, Panos and Perona, Pietro and Belongie, Serge},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={595--604},
+  year={2015}
+}
+@inproceedings{berg2014birdsnap,
+  title={Birdsnap: Large-scale fine-grained visual categorization of birds},
+  author={Berg, Thomas and Liu, Jiongxin and Woo Lee, Seung and Alexander, Michelle L and Jacobs, David W and Belhumeur, Peter N},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition},
+  pages={2011--2018},
+  year={2014}
+}
+```
+If you use the dynamic MNIST dataset, please also cite
+```
+@article{lecun1998mnist,
+  title={The MNIST database of handwritten digits},
+  author={LeCun, Yann},
+  journal={http://yann. lecun. com/exdb/mnist/}
+}
+```
+If you use the static MNIST datset, please also cite
+```
+@article{uria2016neural,
+  title={Neural autoregressive distribution estimation},
+  author={Uria, Benigno and C{\^o}t{\'e}, Marc-Alexandre and Gregor, Karol and Murray, Iain and Larochelle, Hugo},
+  journal={Journal of Machine Learning Research},
+  volume={17},
+  number={205},
+  pages={1--37},
+  year={2016}
+}
+```
+
+## Acknowledgments
+Torch is a **fantastic framework** for deep learning research, which allows fast prototyping and easy manipulation of gradient propogations. We would like to thank the amazing Torch developers and the community. Our implementation has especially been benefited from the following excellent repositories:
+ - Variational Autoencoders: https://github.com/y0ast/VAE-Torch
+ - Spatial Transformer Network: https://github.com/qassemoquab/stnbhwd
+ - facebook.resnet.torch: https://github.com/facebook/fb.resnet.torch
+ - DCGAN: https://github.com/soumith/dcgan.torch
+ - Generating Faces with Torch: https://github.com/skaae/torch-gan
+ - Attr2Img: https://github.com/xcyan/eccv16_attr2img
+ - CIFAR10: https://github.com/szagoruyko/cifar.torch  
