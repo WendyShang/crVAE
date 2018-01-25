@@ -1,0 +1,56 @@
+local M = { }
+
+function M.parse(arg)
+   local cmd = torch.CmdLine()
+   cmd:text()
+   cmd:text('Torch-7 crVAE Training script')
+   cmd:text()
+   cmd:text('Options:')
+   cmd:option('-data',          '',         'Path to dataset')
+   cmd:option('-dataset',       'bird',     'Options: bird')
+   cmd:option('-cudnn',         'fastest',  'Options: fastest | default | deterministic')
+   cmd:option('-manualSeed',    1208,       'Manually set RNG seed')
+   cmd:option('-nEpochs',       150,        'Number of total epochs to run')
+   cmd:option('-epochStep',     25,         'Number of steps to save model')
+   cmd:option('-nSample',     5,         'Number of samples to estimate nll')
+   cmd:option('-step',          50,         'Number of steps to reduce LR')
+   cmd:option('-epochNumber',   1,          'Manual epoch number (useful on restarts)')
+   cmd:option('-batchSize',     128,        'mini-batch size (1 = pure stochastic)')
+   cmd:option('-baseChannels',  32,         'Number of startup conv channels')
+   cmd:option('-bias',          'true',     'Use bias or not for cnn parts')
+   cmd:option('-save',          '',         'Save dir')
+   cmd:option('-alpha',         1,          'Contribution of KL term')
+   cmd:option('-alpha1',        0,          'Contribution of first half KL term')
+   cmd:option('-alpha2',        0,          'Contribution of second half KL term')
+   cmd:option('-beta',          0.1,        'Contribution of discriminative loss to decoder')
+   cmd:option('-kappa',         0.1,        'Contribution of MI')
+   cmd:option('-margin',        0.1,        'Margin to train discriminator')
+   cmd:option('-fakeLabel',     4,          'Every fakeLabel number of examples would be a fake one')
+   cmd:option('-nf',            64,         'Number of filters')
+   cmd:option('-timeStep',      8,          'Number of time steps (only 8 is allowed)')
+   cmd:option('-dropout',       0,          'Dropout for RNN part')
+   cmd:option('-LR',            0.003,      'Initial learning rate')
+   cmd:option('-optimization',  'adam',     'Optimization method')
+   cmd:option('-grad_clip',     5,          'Grad clip for RNN')
+   cmd:option('-eps',           1e-5,       'Eps for BN')
+   cmd:option('-mom',           0.1,        'Momentum for BN')
+   cmd:option('-beta1',         0.9,        'Beta1 for BN')
+   cmd:option('-netType',       'allconv',  'allconv is the only option')
+   cmd:option('-latentType',    'baseline', 'lstm|baseline')
+   cmd:option('-rnnLayer',      2,          'Number of Rnn Layers')
+   cmd:option('-retrain',       'none',     'Path to model to retrain with')
+   cmd:option('-optimState',    'none',     'Path to an optimState to reload from')
+   cmd:option('-stage1',        'none',     'Path to a stage 1 model')
+   cmd:option('-decayLR',       0.5,        'Learning rate decay rate')
+   cmd:option('-binaryMNIST',  '/var/scratch/wshang/mnist_dataset/', 'static binary MNIST path')
+   cmd:option('-dynamicMNIST', '/var/scratch/wshang/mnist_dataset/', 'dyanmic MNIST path')
+   cmd:text()
+
+   local opt = cmd:parse(arg or {})
+   opt.bias = opt.bias ~= 'false'
+   if opt.alpha1 == 0 then opt.alpha1 = nil end
+   if opt.alpha2 == 0 then opt.alpha2 = nil end
+   return opt
+end
+
+return M
