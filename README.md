@@ -1,4 +1,4 @@
-# Channel-Recurrent VAE for Image Modeling [[pdf](http://www-personal.umich.edu/~shangw/wacv18_main.pdf)][[supplementary materials](http://www-personal.umich.edu/~shangw/wacv18_supplementary_material.pdf)]
+# Channel-Recurrent Autoencoding for Image Modeling 
 ## Prerequisites
   - Linux, NVIDIA GPU + CUDA CuDNN 
   - Install torch dependencies from https://github.com/torch/distro
@@ -49,7 +49,7 @@ nSamples=500 modelFile=birds_Stage2_crvae_perc.t7 modelDir=/path/to/pretrained/ 
 ```
 
 ## Citation
-If you find our code useful, please cite our paper:
+If you find our code useful, please cite our paper [[pdf](http://www-personal.umich.edu/~shangw/wacv18_main.pdf)][[supplementary materials](http://www-personal.umich.edu/~shangw/wacv18_supplementary_material.pdf)]:
 ```
 @inproceedings{shang2017channel,
   title={Channel-Recurrent Autoencodering for Image Modeling},
