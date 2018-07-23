@@ -221,7 +221,7 @@ function train(opt)
       df_dz_recon[{{},{latent_division*3+1, latent_division*4},{},{}}]:mul(1.25);
       df_dz_recon[{{},{latent_division*4+1, latent_division*6},{},{}}]:mul(0.1);
       df_dz_recon[{{},{latent_division*6+1, latent_division*8},{},{}}]:mul(1);
-      recon:backward(feature, df_dz_recon_sample)
+      recon:backward(feature_sample, df_dz_recon_sample)
       local Totalerr = ZDislikerr_sample
       return Totalerr, gradParametersRecon
     end
